@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Orvanta Consulting & Advisory Ltd</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+  :root {
+    --teal:      #0A4D3C;
+    --teal-mid:  #0E6B52;
+    --teal-light:#E8F2EE;
+    --gold:      #C8A84B;
+    --gold-light:#F7F1E0;
+    --ink:       #1A1A1A;
+    --body:      #3D4A44;
+    --muted:     #6B7B72;
+    --rule:      #D4DDD9;
+    --bg:        #F8F7F4;
+    --white:     #FFFFFF;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--body);
+    font-size: 16px;
+    line-height: 1.7;
+  }
+
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--teal);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 64px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.18);
+  }
+  .nav-brand { display: flex; align-items: center; gap: 12px; cursor: pointer; }
+  .nav-logo-icon { width: 36px; height: 36px; }
+  .nav-name {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700;
+    color: #F8F7F4; letter-spacing: 2px;
+  }
+  .nav-links { display: flex; gap: 6px; }
+  .nav-links button {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 13px; font-weight: 500;
+    color: rgba(248,247,244,0.75);
+    padding: 8px 14px; border-radius: 4px;
+    letter-spacing: 0.5px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .nav-links button:hover, .nav-links button.active {
+    color: var(--gold); background: rgba(200,168,75,0.1);
+  }
+
+  .page { display: none; }
+  .page.active { display: block; }
+
+  .hero {
+    background: var(--teal);
+    padding: 96px 48px 80px;
+    position: relative; overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: -60px; right: -60px;
+    width: 420px; height: 420px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,168,75,0.15);
+  }
+  .hero::after {
+    content: '';
+    position: absolute; top: 20px; right: 20px;
+    width: 280px; height: 280px;
+    border-radius: 50%;
+    border: 1px solid rgba(200,168,75,0.1);
+  }
+  .hero-inner { max-width: 760px; position: relative; z-index: 1; }
+  .hero-eyebrow {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 20px;
+  }
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(34px, 5vw, 54px);
+    font-weight: 700; line-height: 1.18;
+    color: #F8F7F4; margin-bottom: 24px;
+  }
+  .hero h1 em { font-style: normal; color: var(--gold); }
+  .hero-sub {
+    font-size: 17px; color: rgba(248,247,244,0.78);
+    max-width: 580px; margin-bottom: 40px; line-height: 1.75;
+  }
+  .hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; }
+  .btn-primary {
+    background: var(--gold); color: var(--teal);
+    border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 600;
+    padding: 14px 28px; border-radius: 4px;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .btn-primary:hover { background: #d4b45a; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent;
+    border: 1.5px solid rgba(248,247,244,0.4);
+    color: #F8F7F4; cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px; font-weight: 500;
+    padding: 14px 28px; border-radius: 4px;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--gold); color: var(--gold); background: rgba(200,168,75,0.06); }
+
+  .gold-rule { height: 3px; background: var(--gold); }
+
+  .pillars {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 0; border-top: 3px solid var(--gold);
+  }
+  .pillar { padding: 44px 36px; border-right: 1px solid var(--rule); background: var(--white); }
+  .pillar:last-child { border-right: none; }
+  .pillar-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 40px; font-weight: 700;
+    color: var(--teal-light); line-height: 1; margin-bottom: 16px;
+  }
+  .pillar h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 600;
+    color: var(--teal); margin-bottom: 10px;
+  }
+  .pillar p { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+  .section { padding: 80px 48px; }
+  .section-alt { background: var(--white); }
+  .container { max-width: 960px; margin: 0 auto; }
+
+  .section-label {
+    font-size: 11px; font-weight: 600; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--gold); margin-bottom: 12px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3.5vw, 38px);
+    font-weight: 700; color: var(--teal);
+    line-height: 1.25; margin-bottom: 20px;
+  }
+  .section-intro {
+    font-size: 17px; color: var(--body);
+    max-width: 640px; margin-bottom: 48px; line-height: 1.75;
+  }
+
+  .why-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .why-card {
+    background: var(--teal-light);
+    border-left: 3px solid var(--gold);
+    padding: 28px 28px 28px 24px;
+    border-radius: 0 4px 4px 0;
+  }
+  .why-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--teal); margin-bottom: 8px;
+  }
+  .why-card p { font-size: 14px; color: var(--body); line-height: 1.65; }
+
+  .cta-band {
+    background: var(--teal);
+    padding: 64px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .cta-band h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px; font-weight: 700; color: #F8F7F4;
+    max-width: 500px; line-height: 1.3;
+  }
+  .cta-band h3 em { font-style: normal; color: var(--gold); }
+
+  .about-intro-grid { display: grid; grid-template-columns: 3fr 2fr; gap: 64px; align-items: start; }
+  .about-body p { margin-bottom: 20px; font-size: 16px; color: var(--body); line-height: 1.8; }
+  .about-stat-block { background: var(--teal); padding: 36px 32px; margin-bottom: 16px; }
+  .about-stat {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px; font-weight: 700; color: var(--gold); line-height: 1;
+  }
+  .about-stat-label { font-size: 13px; color: rgba(248,247,244,0.7); margin-top: 6px; line-height: 1.4; }
+  .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; margin-top: 48px; }
+  .value-card { border-top: 2px solid var(--gold); padding: 28px 0 0; }
+  .value-card h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 600;
+    color: var(--teal); margin-bottom: 8px;
+  }
+  .value-card p { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+  .services-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .service-card {
+    background: var(--white); border: 1px solid var(--rule);
+    padding: 36px 32px; border-radius: 2px;
+    transition: box-shadow 0.2s, border-color 0.2s;
+  }
+  .service-card:hover { box-shadow: 0 6px 24px rgba(10,77,60,0.08); border-color: var(--teal); }
+  .service-icon {
+    width: 44px; height: 44px; background: var(--teal-light);
+    border-radius: 50%; display: flex; align-items: center; justify-content: center;
+    margin-bottom: 20px;
+  }
+  .service-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 600; color: var(--teal); margin-bottom: 10px;
+  }
+  .service-card p { font-size: 14px; color: var(--body); line-height: 1.7; margin-bottom: 16px; }
+  .service-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 11px; font-weight: 500; letter-spacing: 0.5px;
+    background: var(--teal-light); color: var(--teal); padding: 4px 10px; border-radius: 2px;
+  }
+
+  .cvai-card {
+    background: var(--white); border-left: 4px solid var(--gold);
+    padding: 40px; margin-bottom: 32px;
+  }
+  .cvai-card .badge {
+    display: inline-block; background: var(--gold-light); color: var(--gold);
+    font-size: 11px; font-weight: 600; letter-spacing: 1px; padding: 4px 10px; margin-bottom: 16px;
+  }
+  .cvai-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 700; color: var(--teal); margin-bottom: 12px; line-height: 1.3;
+  }
+  .cvai-card p { font-size: 15px; color: var(--body); line-height: 1.75; margin-bottom: 16px; }
+  .research-areas { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; margin-top: 48px; }
+  .research-area { padding: 28px 24px; background: var(--white); border-top: 2px solid var(--teal); }
+  .research-area h4 {
+    font-family: 'Playfair Display', serif;
+    font-size: 15px; font-weight: 600; color: var(--teal); margin-bottom: 8px;
+  }
+  .research-area p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+  .training-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .training-card { background: var(--white); padding: 36px 32px; border-radius: 2px; border: 1px solid var(--rule); }
+  .training-card .level {
+    font-size: 11px; font-weight: 600; letter-spacing: 1.5px;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 12px;
+  }
+  .training-card h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 600; color: var(--teal); margin-bottom: 10px;
+  }
+  .training-card p { font-size: 14px; color: var(--body); line-height: 1.7; margin-bottom: 20px; }
+  .training-meta { display: flex; gap: 16px; flex-wrap: wrap; }
+  .meta-item { font-size: 12px; color: var(--muted); }
+  .meta-item strong { color: var(--teal); display: block; font-size: 13px; }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
+  .contact-info h3 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px; font-weight: 600; color: var(--teal); margin-bottom: 16px;
+  }
+  .contact-info p { font-size: 15px; color: var(--body); margin-bottom: 32px; line-height: 1.7; }
+  .contact-detail { display: flex; gap: 14px; align-items: flex-start; margin-bottom: 20px; }
+  .contact-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); margin-top: 7px; flex-shrink: 0; }
+  .contact-detail-text strong {
+    display: block; font-size: 12px; font-weight: 600;
+    letter-spacing: 1px; text-transform: uppercase; color: var(--muted); margin-bottom: 2px;
+  }
+  .contact-detail-text span { font-size: 15px; color: var(--ink); }
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .form-field { display: flex; flex-direction: column; gap: 6px; }
+  .form-field label {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.8px;
+    text-transform: uppercase; color: var(--muted);
+  }
+  .form-field input, .form-field select, .form-field textarea {
+    font-family: 'Inter', sans-serif; font-size: 15px; color: var(--ink);
+    border: 1.5px solid var(--rule); border-radius: 2px; padding: 12px 14px;
+    background: var(--white); transition: border-color 0.2s; outline: none;
+  }
+  .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--teal); }
+  .form-field textarea { resize: vertical; min-height: 130px; }
+
+  footer { background: var(--ink); padding: 48px; }
+  .footer-inner {
+    max-width: 960px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    gap: 32px; flex-wrap: wrap;
+  }
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px; font-weight: 700; color: #F8F7F4; letter-spacing: 2px;
+  }
+  .footer-sub { font-size: 12px; color: rgba(248,247,244,0.45); margin-top: 4px; }
+  .footer-right { font-size: 12px; color: rgba(248,247,244,0.4); text-align: right; line-height: 1.8; }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand" onclick="showPage('home')">
+    <svg class="nav-logo-icon" viewBox="-70 -70 140 140" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="0" cy="0" r="62" fill="none" stroke="#F8F7F4" stroke-width="4.5"/>
+      <path d="M -54 8 A 54 54 0 0 1 54 8" fill="none" stroke="#F8F7F4" stroke-width="3.2" stroke-linecap="round"/>
+      <path d="M -43 20 A 43 25 0 0 1 43 20" fill="none" stroke="#C8A84B" stroke-width="2.8" stroke-linecap="round"/>
+      <path d="M -29 32 A 29 13 0 0 1 29 32" fill="none" stroke="#F8F7F4" stroke-width="2.2" stroke-linecap="round"/>
+      <line x1="0" y1="-16" x2="0" y2="-52" stroke="#C8A84B" stroke-width="3.5" stroke-linecap="round"/>
+      <path d="M -10 -38 L 0 -52 L 10 -38" fill="none" stroke="#C8A84B" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <circle cx="0" cy="-12" r="4" fill="#C8A84B"/>
+    </svg>
+    <span class="nav-name">ORVANTA</span>
+  </div>
+  <div class="nav-links">
+    <button onclick="showPage('home')" id="nav-home" class="active">Home</button>
+    <button onclick="showPage('about')" id="nav-about">About</button>
+    <button onclick="showPage('services')" id="nav-services">Services</button>
+    <button onclick="showPage('research')" id="nav-research">Research</button>
+    <button onclick="showPage('training')" id="nav-training">Training</button>
+    <button onclick="showPage('contact')" id="nav-contact">Contact</button>
+  </div>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Environmental · Hydrogeology · Research · Advisory</p>
+      <h1>Earth intelligence<br/>for <em>resilient</em> development</h1>
+      <p class="hero-sub">Orvanta Consulting & Advisory Ltd provides high-precision environmental insights, technical advisory, and applied research — equipping organisations, institutions, and funders with the knowledge to make better decisions in complex environments.</p>
+      <div class="hero-ctas">
+        <button class="btn-primary" onclick="showPage('services')">Explore Our Services</button>
+        <button class="btn-outline" onclick="showPage('contact')">Get In Touch</button>
+      </div>
+    </div>
+  </div>
+  <div class="pillars">
+    <div class="pillar">
+      <div class="pillar-num">I</div>
+      <h3>Environmental Consulting & Advisory</h3>
+      <p>Technical review, EIA quality assurance, environmental report writing, and expert guidance for projects across Nigeria and West Africa.</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">II</div>
+      <h3>Applied Research & Innovation</h3>
+      <p>Rigorous research in environmental geoscience, climate risk, and hydrogeology — including our flagship Climate Vulnerability Amplification Index (CVAI).</p>
+    </div>
+    <div class="pillar">
+      <div class="pillar-num">III</div>
+      <h3>Training & Capacity Building</h3>
+      <p>Practical workshops and professional development for environmental practitioners, researchers, and organisations adopting AI-assisted geoscience workflows.</p>
+    </div>
+  </div>
+  <div class="section section-alt">
+    <div class="container">
+      <p class="section-label">Why Orvanta</p>
+      <h2>Expertise that bridges the gap between science and practice</h2>
+      <p class="section-intro">We work at the intersection of deep technical knowledge and real-world application — offering rigorous, evidence-based support that makes a difference to projects, policies, and people.</p>
+      <div class="why-grid">
+        <div class="why-card">
+          <h4>PhD-level Environmental Geoscience</h4>
+          <p>Our work is grounded in advanced academic training and active research — not just field experience. You get science that stands up to scrutiny.</p>
+        </div>
+        <div class="why-card">
+          <h4>Nigeria & West Africa Focus</h4>
+          <p>We understand the regulatory environment, the terrain, and the context. Our advisory is always grounded in local realities, not imported templates.</p>
+        </div>
+        <div class="why-card">
+          <h4>AI-Augmented Workflows</h4>
+          <p>We apply next-generation tools to geoscience challenges — from AI-assisted literature synthesis to intelligent environmental risk profiling.</p>
+        </div>
+        <div class="why-card">
+          <h4>Academic Integrity, Commercial Value</h4>
+          <p>We produce work that meets the rigour of peer review and the clarity that clients and funders need to act on. No trade-off between the two.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cta-band">
+    <h3>Ready to work with <em>evidence</em>, not assumption?</h3>
+    <button class="btn-primary" onclick="showPage('contact')">Start a Conversation</button>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div id="page-about" class="page">
+  <div class="hero" style="padding: 72px 48px 64px;">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">About Orvanta</p>
+      <h1>Built on science.<br/>Driven by <em>purpose</em>.</h1>
+    </div>
+  </div>
+  <div class="gold-rule"></div>
+  <div class="section section-alt">
+    <div class="container">
+      <div class="about-intro-grid">
+        <div class="about-body">
+          <p class="section-label">Our Story</p>
+          <p>Orvanta Consulting & Advisory Ltd was founded with a clear conviction: that the gap between rigorous environmental science and practical decision-making in Nigeria is too wide, and too costly to ignore.</p>
+          <p>Operating from Sagamu, Nigeria, we are an environmental and hydrogeological consulting firm with a deliberate focus on evidence-based advisory, applied research, and technical capacity building. We work with institutions, funders, consultants, and public sector bodies who need environmental intelligence they can trust and act on.</p>
+          <p>The name Orvanta was chosen to reflect what we aspire to be — a firm with international standards, grounded in African knowledge, solving African challenges. We are registered in Nigeria (RC No. 9594969) and committed to operating with full professionalism, transparency, and intellectual rigour.</p>
+          <p>At Orvanta, we believe that good environmental science should not remain locked in academic journals. It should shape the decisions that affect communities, ecosystems, and development outcomes.</p>
+        </div>
+        <div>
+          <div class="about-stat-block">
+            <div class="about-stat">RC</div>
+            <div class="about-stat-label">9594969 — Registered in Nigeria (CAC)</div>
+          </div>
+          <div class="about-stat-block">
+            <div class="about-stat">3</div>
+            <div class="about-stat-label">Core service pillars spanning consulting, research & training</div>
+          </div>
+          <div class="about-stat-block">
+            <div class="about-stat">W. Africa</div>
+            <div class="about-stat-label">Geographic focus with international standards</div>
+          </div>
+        </div>
+      </div>
+      <div class="values-grid">
+        <div class="value-card">
+          <h4>Evidence-Based</h4>
+          <p>Every recommendation we make is grounded in data, methodology, and scientific integrity. We do not speculate.</p>
+        </div>
+        <div class="value-card">
+          <h4>Contextually Grounded</h4>
+          <p>We know that Nigeria and West Africa are not simply case studies. They are our operating environment, and we respect their complexity.</p>
+        </div>
+        <div class="value-card">
+          <h4>Intellectually Honest</h4>
+          <p>We say what the evidence supports. We flag uncertainty. We welcome challenge. Good science demands no less.</p>
+        </div>
+        <div class="value-card">
+          <h4>Practically Useful</h4>
+          <p>We write reports people can act on, deliver training people can apply, and provide insights that make a measurable difference.</p>
+        </div>
+        <div class="value-card">
+          <h4>Forward-Looking</h4>
+          <p>We actively integrate emerging tools — including AI — into our workflows, so our clients benefit from the best of what is available today.</p>
+        </div>
+        <div class="value-card">
+          <h4>Long-Term Thinking</h4>
+          <p>We are not interested in quick fixes. We build relationships, frameworks, and knowledge assets that compound in value over time.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div id="page-services" class="page">
+  <div class="hero" style="padding: 72px 48px 64px;">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Our Services</p>
+      <h1>What we do —<br/>and how we can <em>help you</em>.</h1>
+      <p class="hero-sub">Our services are designed for clients who need technically rigorous, practically grounded environmental support — without the overhead of a large firm.</p>
+    </div>
+  </div>
+  <div class="gold-rule"></div>
+  <div class="section section-alt">
+    <div class="container">
+      <p class="section-label">Core Services</p>
+      <h2>Environmental Consulting & Advisory</h2>
+      <p class="section-intro">We provide technical environmental services to consultants, NGOs, government agencies, and project developers across Nigeria and West Africa.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4D3C" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
+          </div>
+          <h3>EIA Review & Quality Assurance</h3>
+          <p>Independent technical review of Environmental Impact Assessments — identifying gaps, strengthening methodology, and ensuring your report meets regulatory and funder standards.</p>
+          <div class="service-tags"><span class="tag">EIA</span><span class="tag">Technical Review</span><span class="tag">Regulatory</span></div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4D3C" stroke-width="2" stroke-linecap="round"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14,2 14,8 20,8"/></svg>
+          </div>
+          <h3>Environmental Report Writing</h3>
+          <p>Expert drafting and co-authoring of baseline studies, environmental management plans, and technical reports — written to international standards with deep local knowledge.</p>
+          <div class="service-tags"><span class="tag">Report Writing</span><span class="tag">EMP</span><span class="tag">Baseline Studies</span></div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4D3C" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg>
+          </div>
+          <h3>Hydrogeological Advisory</h3>
+          <p>Specialist guidance on groundwater systems, aquifer characterisation, and water resource management for infrastructure projects, research, and environmental compliance.</p>
+          <div class="service-tags"><span class="tag">Hydrogeology</span><span class="tag">Groundwater</span><span class="tag">Water Resources</span></div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4D3C" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <h3>Climate Risk Assessment</h3>
+          <p>Technical evaluation of climate-related environmental risks — including the impact of soil degradation on climate vulnerability — for adaptation planning and funding applications.</p>
+          <div class="service-tags"><span class="tag">Climate Risk</span><span class="tag">Adaptation</span><span class="tag">CVAI</span></div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4D3C" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          </div>
+          <h3>Document Analysis & Technical Review</h3>
+          <p>Our team provides in-depth analysis of lengthy technical documents, distilling key findings, risks, and gaps into clear, actionable summaries — quality-assured by our environmental specialists.</p>
+          <div class="service-tags"><span class="tag">Document Analysis</span><span class="tag">Literature Review</span><span class="tag">Technical Summary</span></div>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A4D3C" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          </div>
+          <h3>Research Support & Collaboration</h3>
+          <p>We partner with academic institutions, graduate researchers, and international research consortia on environmental and hydrogeological studies — offering expert guidance and co-authorship.</p>
+          <div class="service-tags"><span class="tag">Research</span><span class="tag">Collaboration</span><span class="tag">Academia</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cta-band">
+    <h3>Not sure which service fits your <em>need</em>? Let's talk it through.</h3>
+    <button class="btn-primary" onclick="showPage('contact')">Contact Us</button>
+  </div>
+</div>
+
+<!-- RESEARCH -->
+<div id="page-research" class="page">
+  <div class="hero" style="padding: 72px 48px 64px;">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Research & Innovation</p>
+      <h1>Knowledge that<br/><em>moves</em> the field forward.</h1>
+      <p class="hero-sub">At Orvanta, research is not separate from practice — it is the foundation of everything we do. We produce work designed to inform both science and decision-making.</p>
+    </div>
+  </div>
+  <div class="gold-rule"></div>
+  <div class="section section-alt">
+    <div class="container">
+      <p class="section-label">Flagship Research Initiative</p>
+      <div class="cvai-card">
+        <span class="badge">ORVANTA RESEARCH SERIES · WORKING PAPER NO. 1</span>
+        <h3>The Climate Vulnerability Amplification Index (CVAI)</h3>
+        <p>How does soil contamination change the way communities experience climate risk? Current vulnerability indices — including ND-GAIN and standard IPCC frameworks — treat soil health as a background variable. The CVAI proposes that soil degradation and contamination systematically amplify climate vulnerability, and that this amplification effect can be measured, modelled, and incorporated into adaptation planning and funding decisions.</p>
+        <p>Developed under the Orvanta Research Initiative and grounded in evidence from oil-affected regions of the Niger Delta, the CVAI framework introduces an Amplification Factor (AF) scale designed to quantify how degraded earth systems magnify the effects of climate hazards on affected communities. This is open research — we are actively seeking collaboration, peer review, and co-development with institutions, researchers, and funders working in climate adaptation and environmental resilience.</p>
+        <div class="service-tags">
+          <span class="tag">Climate Risk</span><span class="tag">Soil Contamination</span>
+          <span class="tag">Niger Delta</span><span class="tag">Vulnerability Indices</span><span class="tag">Working Paper</span>
+        </div>
+      </div>
+      <p class="section-label" style="margin-top:48px;">Research Areas</p>
+      <h2>What we investigate</h2>
+      <div class="research-areas">
+        <div class="research-area">
+          <h4>Environmental Geoscience</h4>
+          <p>Soil characterisation, contamination assessment, and land degradation in Nigerian and West African contexts.</p>
+        </div>
+        <div class="research-area">
+          <h4>Hydrogeology & Groundwater</h4>
+          <p>Aquifer systems, groundwater quality, and the relationship between surface contamination and subsurface water resources.</p>
+        </div>
+        <div class="research-area">
+          <h4>Climate Risk & Adaptation</h4>
+          <p>Novel frameworks for measuring and communicating climate vulnerability — with a focus on amplification effects in degraded ecosystems.</p>
+        </div>
+        <div class="research-area">
+          <h4>AI for Earth Systems</h4>
+          <p>Application of machine learning and AI tools to environmental data analysis, risk modelling, and geoscience workflows.</p>
+        </div>
+        <div class="research-area">
+          <h4>Ensemble Modelling</h4>
+          <p>Uncertainty quantification in geotechnical and environmental models — improving the reliability of predictive assessments.</p>
+        </div>
+        <div class="research-area">
+          <h4>Policy-Relevant Science</h4>
+          <p>Research designed to cross the gap between academic publication and practical application in environmental governance and climate finance.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cta-band">
+    <h3>Interested in <em>collaborating</em> on research or co-developing the CVAI framework?</h3>
+    <button class="btn-primary" onclick="showPage('contact')">Reach Out</button>
+  </div>
+</div>
+
+<!-- TRAINING -->
+<div id="page-training" class="page">
+  <div class="hero" style="padding: 72px 48px 64px;">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Training & Capacity Building</p>
+      <h1>Practical knowledge for<br/><em>environmental professionals</em>.</h1>
+      <p class="hero-sub">Our training programmes are built for practitioners, researchers, and organisations who want to work smarter — combining deep geoscience expertise with the tools shaping the next generation of environmental practice.</p>
+    </div>
+  </div>
+  <div class="gold-rule"></div>
+  <div class="section section-alt">
+    <div class="container">
+      <p class="section-label">Programmes</p>
+      <h2>What we offer</h2>
+      <p class="section-intro">All Orvanta training is practically oriented — built around real workflows, real Nigerian regulatory contexts, and real tools. We do not run generic courses.</p>
+      <div class="training-grid">
+        <div class="training-card">
+          <div class="level">Workshop · Professional</div>
+          <h3>AI Tools for Environmental Geoscience</h3>
+          <p>A focused 2-day intensive for environmental consultants, researchers, and practitioners ready to integrate AI-assisted workflows into their practice. Covers literature synthesis, report summarisation, risk profiling, and quality checking — with hands-on application to real-world environmental scenarios.</p>
+          <div class="training-meta">
+            <div class="meta-item"><strong>Format</strong>Virtual or In-Person</div>
+            <div class="meta-item"><strong>Duration</strong>2 Days</div>
+            <div class="meta-item"><strong>Level</strong>Intermediate</div>
+          </div>
+        </div>
+        <div class="training-card">
+          <div class="level">Workshop · Technical</div>
+          <h3>Writing High-Quality Environmental Reports</h3>
+          <p>A practical workshop on producing EIAs, baseline studies, and environmental management plans that meet NESREA, DPR, and international funder standards. Covers structure, technical writing, common failure points, and how to QA your own reports before submission.</p>
+          <div class="training-meta">
+            <div class="meta-item"><strong>Format</strong>Virtual or In-Person</div>
+            <div class="meta-item"><strong>Duration</strong>1–2 Days</div>
+            <div class="meta-item"><strong>Level</strong>All Levels</div>
+          </div>
+        </div>
+        <div class="training-card">
+          <div class="level">Short Course · Research</div>
+          <h3>Climate Risk Assessment for Environmental Practitioners</h3>
+          <p>An introduction to climate vulnerability frameworks, risk indices, and how to incorporate climate considerations into environmental assessments and project proposals — including access to the Orvanta CVAI methodology.</p>
+          <div class="training-meta">
+            <div class="meta-item"><strong>Format</strong>Virtual</div>
+            <div class="meta-item"><strong>Duration</strong>Half Day</div>
+            <div class="meta-item"><strong>Level</strong>Intermediate</div>
+          </div>
+        </div>
+        <div class="training-card">
+          <div class="level">Bespoke · Institutional</div>
+          <h3>Organisational Training & Capacity Building</h3>
+          <p>Tailored training for government agencies, NGOs, and environmental departments — designed around your team's specific knowledge gaps, regulatory context, and operational priorities. Available as multi-day programmes or ongoing advisory support.</p>
+          <div class="training-meta">
+            <div class="meta-item"><strong>Format</strong>Flexible</div>
+            <div class="meta-item"><strong>Duration</strong>Bespoke</div>
+            <div class="meta-item"><strong>Level</strong>All Levels</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="cta-band">
+    <h3>Want to bring an Orvanta programme to your <em>team or institution</em>?</h3>
+    <button class="btn-primary" onclick="showPage('contact')">Enquire Now</button>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div id="page-contact" class="page">
+  <div class="hero" style="padding: 72px 48px 64px;">
+    <div class="hero-inner">
+      <p class="hero-eyebrow">Get In Touch</p>
+      <h1>Let's talk about<br/>what you <em>need</em>.</h1>
+      <p class="hero-sub">Whether you have a specific project in mind, want to explore collaboration, or simply want to understand how Orvanta can help — we would like to hear from you.</p>
+    </div>
+  </div>
+  <div class="gold-rule"></div>
+  <div class="section section-alt">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Orvanta Consulting & Advisory Ltd</h3>
+          <p>We are a small, expert-led firm. When you contact us, you are speaking directly with the people who will work on your project. We respond to all enquiries within 2 business days.</p>
+          <div class="contact-detail">
+            <div class="contact-dot"></div>
+            <div class="contact-detail-text"><strong>Email</strong><span>orvanta.office@gmail.com</span></div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-dot"></div>
+            <div class="contact-detail-text"><strong>Address</strong><span>3 Oremeji Close, Sagamu, Ogun State, Nigeria</span></div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-dot"></div>
+            <div class="contact-detail-text"><strong>Registration</strong><span>RC No. 9594969 (CAC Nigeria)</span></div>
+          </div>
+          <div class="contact-detail">
+            <div class="contact-dot"></div>
+            <div class="contact-detail-text"><strong>Response Time</strong><span>Within 2 business days</span></div>
+          </div>
+        </div>
+        <div>
+          <div class="contact-form">
+            <div class="form-field">
+              <label>Your Name</label>
+              <input type="text" placeholder="Dr. / Mr. / Ms. Full Name"/>
+            </div>
+            <div class="form-field">
+              <label>Organisation</label>
+              <input type="text" placeholder="Your institution or company"/>
+            </div>
+            <div class="form-field">
+              <label>Email Address</label>
+              <input type="email" placeholder="your@email.com"/>
+            </div>
+            <div class="form-field">
+              <label>Area of Interest</label>
+              <select>
+                <option value="">Select a service area</option>
+                <option>Environmental Consulting & Advisory</option>
+                <option>EIA Review & Quality Assurance</option>
+                <option>Hydrogeological Advisory</option>
+                <option>Climate Risk Assessment</option>
+                <option>Research Collaboration (CVAI)</option>
+                <option>Training & Capacity Building</option>
+                <option>Document Analysis & Technical Review</option>
+                <option>Other / Not Sure</option>
+              </select>
+            </div>
+            <div class="form-field">
+              <label>Message</label>
+              <textarea placeholder="Tell us briefly about your project or enquiry..."></textarea>
+            </div>
+            <button class="btn-primary" style="width:100%; padding:16px;">Send Enquiry</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">ORVANTA</div>
+      <div class="footer-sub">Consulting & Advisory Ltd &nbsp;·&nbsp; RC No. 9594969</div>
+    </div>
+    <div class="footer-right">
+      3 Oremeji Close, Sagamu, Nigeria<br/>
+      orvanta.office@gmail.com<br/>
+      &copy; 2025 Orvanta Consulting & Advisory Ltd
+    </div>
+  </div>
+</footer>
+
+<script>
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links button').forEach(b => b.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.getElementById('nav-' + name).classList.add('active');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+</script>
+</body>
+</html>
